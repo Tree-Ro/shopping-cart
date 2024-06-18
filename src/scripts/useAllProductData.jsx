@@ -6,16 +6,32 @@ const useAllProductData = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('https://fakestoreapi.com/products', { mode: 'cors' })
-      .then((response) => {
-        if (response.status >= 400) {
-          throw new Error('server error');
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+
+    fetch('https://fakestoreapi.com/products', { signal })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
         return response.json();
       })
-      .then((response) => setData(response))
-      .catch((error) => setError(error))
-      .finally(() => setIsLoading(false));
+      .then(data => {
+        setData(data);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        if (error.name === 'AbortError') {
+          console.log('Fetch aborted');
+        } else {
+          setError(error);
+          setIsLoading(false);
+        }
+      });
+
+    return () => {
+      abortController.abort();
+    };
   }, []);
 
   return { data, error, isLoading };

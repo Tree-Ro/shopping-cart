@@ -10,6 +10,7 @@ function Shop() {
   const { data, error, isLoading } = useAllProductData();
 
   function handleAddItemToCart(newItem) {
+    console.log(itemsInCart)
     const existingItemIndex = itemsInCart.findIndex(item => item.id === newItem.id);
 
     if (existingItemIndex !== -1) {
@@ -28,14 +29,14 @@ function Shop() {
   if (error) return <p>A network error was encountered</p>;
 
   return (
-    <div>
+    <div className={styles.shopContainer}>
       {data.map(item => (
         <Card
           key={item.id}
           id={item.id}
           title={item.title}
           desc={item.description}
-          imgUrl={item.image}
+          image={item.image}
           addItemToCart={handleAddItemToCart}
         />
       ))}
