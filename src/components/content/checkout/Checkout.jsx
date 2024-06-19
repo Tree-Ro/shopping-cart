@@ -21,6 +21,7 @@ const [itemsInCart, setItemsInCart] = useOutletContext()
         image={item.image}
         title={item.title}
         count={item.count}
+        price={item.price}
         handleItemUpdate={() => handleItemUpdate(item.id)}
       />) : 
       <div className={styles.placeholder}>

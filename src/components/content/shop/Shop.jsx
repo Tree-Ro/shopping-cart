@@ -36,6 +36,7 @@ function Shop() {
           id={item.id}
           title={item.title}
           desc={item.description}
+          price={item.price}
           image={item.image}
           addItemToCart={handleAddItemToCart}
         />
@@ -50,6 +51,7 @@ Shop.propTypes = {
       id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
       image: PropTypes.string.isRequired,
     })
   ),
